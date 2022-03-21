@@ -8,7 +8,7 @@ namespace API.Recipes
 {
     internal static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddPosts(this IServiceCollection services)
+        public static IServiceCollection AddRecipes(this IServiceCollection services)
         {
             services.AddSingleton(provider =>
             {

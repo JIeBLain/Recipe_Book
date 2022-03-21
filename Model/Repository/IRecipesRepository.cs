@@ -8,7 +8,7 @@ namespace Model.Repository
     {
         public Task<Recipe> GetRecipeAsync(string id, CancellationToken token);
 
-        public Task<RecipesList> SeachRecipeAsync(RecipeSearchInfo searchInfo, CancellationToken token);
+        public Task<RecipesList> SearchRecipeAsync(RecipeSearchInfo searchInfo, CancellationToken token);
 
         public Task<Recipe> CreateRecipeAsync(RecipeCreateInfo createInfo, CancellationToken token);
 

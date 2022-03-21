@@ -11,6 +11,7 @@ namespace API.Mapping
             this.AllowNullCollections = true;
 
             this.CreateMap<ViewRecipes.Recipe, ModelRecipes.Recipe>(MemberList.None).ReverseMap();
+            this.CreateMap<ViewRecipes.RecipeShortInfo, ModelRecipes.Recipe>(MemberList.None).ReverseMap();
             this.CreateMap<ViewRecipes.RecipeCreateInfo, ModelRecipes.RecipeCreateInfo>(MemberList.None).ReverseMap();
             this.CreateMap<ViewRecipes.RecipeSearchInfo, ModelRecipes.RecipeSearchInfo>(MemberList.None).ReverseMap();
             this.CreateMap<ViewRecipes.RecipeUpdateInfo, ModelRecipes.RecipeUpdateInfo>(MemberList.None).ReverseMap();

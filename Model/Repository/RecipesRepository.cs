@@ -14,8 +14,7 @@ namespace Model.Repository
 
         public RecipesRepository(IMongoCollection<Recipe> recipesCollection)
         {
-            this.recipesCollection = recipesCollection ??
-                throw new ArgumentNullException(nameof(recipesCollection));
+            this.recipesCollection = recipesCollection ?? throw new ArgumentNullException(nameof(recipesCollection));
         }
 
         public async Task<Recipe> GetRecipeAsync(string id, CancellationToken token)
@@ -33,7 +32,7 @@ namespace Model.Repository
             return recipe;
         }
 
-        public async Task<RecipesList> SeachRecipeAsync(RecipeSearchInfo searchInfo, CancellationToken token)
+        public async Task<RecipesList> SearchRecipeAsync(RecipeSearchInfo searchInfo, CancellationToken token)
         {
             var builder = Builders<Recipe>.Filter;
             var filter = builder.Empty;
@@ -75,7 +74,6 @@ namespace Model.Repository
 
         public async Task<Recipe> CreateRecipeAsync(RecipeCreateInfo createInfo, CancellationToken token)
         {
-            var utcNow = DateTime.UtcNow;
             var recipe = new Recipe
             {
                 Id = Guid.NewGuid().ToString(),
@@ -86,7 +84,7 @@ namespace Model.Repository
                 Directions = createInfo.Directions,
                 Ingredients = createInfo.Ingredients,
                 CookingTime = createInfo.CookingTime,
-                CreatedAt = utcNow
+                CreatedAt = createInfo.CreatedAt ?? DateTime.UtcNow
             };
 
             await this.recipesCollection.InsertOneAsync(recipe, cancellationToken: token);
@@ -146,8 +144,7 @@ namespace Model.Repository
 
         public async Task DeleteRecipeAsync(string id, CancellationToken token)
         {
-            var deleteResult = await this.recipesCollection
-                .DeleteOneAsync(recipe => recipe.Id == id, token);
+            var deleteResult = await this.recipesCollection.DeleteOneAsync(recipe => recipe.Id == id, token);
 
             if (deleteResult.DeletedCount == 0)
             {

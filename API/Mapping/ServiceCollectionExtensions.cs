@@ -7,9 +7,9 @@ namespace API.Mapping
     {
         public static IServiceCollection AddMapping(this IServiceCollection services)
         {
-            var mappingCongig = new MapperConfiguration(m =>
+            var mappingConfig = new MapperConfiguration(m =>
             m.AddProfile(new MappingProfile()));
-            services.AddSingleton(mappingCongig.CreateMapper());
+            services.AddSingleton(mappingConfig.CreateMapper());
             return services;
         }
     }

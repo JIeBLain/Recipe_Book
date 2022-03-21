@@ -12,6 +12,6 @@ namespace Model.Recipes
         public IReadOnlyList<string> Ingredients { get; set; }
         public IReadOnlyList<string> Directions { get; set; }
         public string CookingTime { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }
