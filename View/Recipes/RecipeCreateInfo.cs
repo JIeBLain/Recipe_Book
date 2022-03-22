@@ -21,7 +21,7 @@ namespace View.Recipes
         public string Category { get; set; }
         
         [DataMember(IsRequired = true)]
-        [StringLength(1000)]
+        [StringLength(2500)]
         public string Description { get; set; }
         
         [DataMember(IsRequired = true)]

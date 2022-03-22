@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using API.Recipes;
 using Microsoft.AspNetCore.Mvc;
 using Model.Exceptions;
+using RecipesBook.Recipes;
 using View.Recipes;
 
-namespace API.Controllers
+namespace RecipesBook.Controllers
 {
     [ApiController]
     [Route("recipes")]

@@ -2,9 +2,9 @@
 using ViewRecipes = View.Recipes;
 using ModelRecipes = Model.Recipes;
 
-namespace API.Mapping
+namespace RecipesBook.Mapping
 {
-    internal sealed class MappingProfile :Profile
+    internal sealed class MappingProfile : Profile
     {
         public MappingProfile()
         {

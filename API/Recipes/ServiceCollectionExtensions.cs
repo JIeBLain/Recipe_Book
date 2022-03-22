@@ -4,11 +4,11 @@ using Model.Recipes;
 using Model.Repository;
 using MongoDB.Driver;
 
-namespace API.Recipes
+namespace RecipesBook.Recipes
 {
     internal static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddRecipes(this IServiceCollection services)
+        public static void AddRecipes(this IServiceCollection services)
         {
             services.AddSingleton(provider =>
             {
@@ -21,8 +21,6 @@ namespace API.Recipes
             });
             services.AddSingleton<IRecipesRepository, RecipesRepository>();
             services.AddSingleton<RecipesService>();
-
-            return services;
         }
     }
 }

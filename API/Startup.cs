@@ -4,10 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using API.Mapping;
-using API.Recipes;
+using RecipesBook.Mapping;
+using RecipesBook.Recipes;
 
-namespace API
+namespace RecipesBook
 {
     public class Startup
     {
@@ -22,7 +22,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"}); })
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Recipes' Book API", Version = "v1"}); })
                 .AddMapping()
                 .AddRecipes();
         }

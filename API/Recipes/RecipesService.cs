@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,7 +8,7 @@ using Model.Repository;
 using ViewRecipes = View.Recipes;
 using ModelRecipes = Model.Recipes;
 
-namespace API.Recipes
+namespace RecipesBook.Recipes
 {
     public sealed class RecipesService
     {
@@ -64,12 +66,51 @@ namespace API.Recipes
             await this.recipesRepository.DeleteRecipeAsync(id, token);
         }
 
-        public static void ValidateOnCreate(ModelRecipes.RecipeCreateInfo createInfo)
+        private static void ValidateOnCreate(ModelRecipes.RecipeCreateInfo createInfo)
         {
+            if (createInfo.Ingredients?.Any(string.IsNullOrWhiteSpace) == true)
+            {
+                throw new ValidationException("Ingredients cannot be null or whitespace.");
+            }
+
+            if (createInfo.Directions?.Any(string.IsNullOrWhiteSpace) == true)
+            {
+                throw new ValidationException("Directions cannot be null or whitespace.");
+            }
+
+            if (createInfo.Directions?.Count > createInfo.Directions?.Distinct().Count())
+            {
+                throw new ValidationException("All directions must be different!");
+            }
         }
 
-        public static void ValidateOnUpdate(ModelRecipes.RecipeUpdateInfo updateInfo)
+        private static void ValidateOnUpdate(ModelRecipes.RecipeUpdateInfo updateInfo)
         {
+            if (string.IsNullOrWhiteSpace(updateInfo.Name) &&
+                string.IsNullOrWhiteSpace(updateInfo.Cuisine) &&
+                string.IsNullOrWhiteSpace(updateInfo.Category) &&
+                string.IsNullOrWhiteSpace(updateInfo.Description) &&
+                string.IsNullOrWhiteSpace(updateInfo.CookingTime) &&
+                updateInfo.Directions == null &&
+                updateInfo.Ingredients == null)
+            {
+                throw new ValidationException("Update info is empty.");
+            }
+
+            if (updateInfo.Ingredients?.Any(string.IsNullOrWhiteSpace) == true)
+            {
+                throw new ValidationException("Ingredients cannot be null or whitespace.");
+            }
+
+            if (updateInfo.Directions?.Any(string.IsNullOrWhiteSpace) == true)
+            {
+                throw new ValidationException("Directions cannot be null or whitespace.");
+            }
+
+            if (updateInfo.Directions?.Count > updateInfo.Directions?.Distinct().Count())
+            {
+                throw new ValidationException("All directions must be different!");
+            }
         }
     }
 }
