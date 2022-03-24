@@ -57,15 +57,18 @@ namespace Model.Repository
                 filter &= builder.Gte(recipe => recipe.CreatedAt, searchInfo.FromCreatedAt);
             }
 
-            if (searchInfo.CreatedAt != null)
+            if (searchInfo.ToCreatedAt != null)
             {
-                filter &= builder.Lt(recipe => recipe.CreatedAt, searchInfo.CreatedAt);
+                filter &= builder.Lt(recipe => recipe.CreatedAt, searchInfo.ToCreatedAt);
             }
+            
+            var limit = searchInfo.Limit ?? 10;
+            var offset = searchInfo.Offset ?? 0;
 
             var cursor = this.recipesCollection.Find(filter);
             var recipes = await cursor
-                .Limit(searchInfo.Limit)
-                .Skip(searchInfo.Offset)
+                .Limit(limit)
+                .Skip(offset)
                 .ToListAsync(token);
             var total = await cursor.CountDocumentsAsync(token);
 

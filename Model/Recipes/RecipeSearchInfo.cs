@@ -8,7 +8,7 @@ namespace Model.Recipes
         public string Cuisine { get; set; }
         public string Category { get; set; }
         public DateTime? FromCreatedAt { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? ToCreatedAt { get; set; }
         public int? Limit { get; set; }
         public int? Offset { get; set; }
     }
