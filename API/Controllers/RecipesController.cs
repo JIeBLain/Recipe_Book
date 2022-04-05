@@ -12,9 +12,9 @@ namespace RecipesBook.Controllers
     [Route("recipes")]
     public class RecipesController : ControllerBase
     {
-        private readonly RecipesService recipeService;
+        private readonly IRecipesService recipeService;
 
-        public RecipesController(RecipesService recipeService)
+        public RecipesController(IRecipesService recipeService)
         {
             this.recipeService = recipeService;
         }
@@ -24,7 +24,7 @@ namespace RecipesBook.Controllers
         {
             try
             {
-                var recipe = await this.recipeService.GetRecipeAsync(id, token);
+                var recipe = await this.recipeService.GetRecipeAsync(id, token).ConfigureAwait(false);
                 return this.Ok(recipe);
             }
             catch (RecipeNotFoundException)
@@ -45,7 +45,7 @@ namespace RecipesBook.Controllers
         {
             try
             {
-                var recipe = await this.recipeService.CreateRecipeAsync(createInfo, token);
+                var recipe = await this.recipeService.CreateRecipeAsync(createInfo, token).ConfigureAwait(false);
                 return this.Ok(recipe);
             }
             catch (ValidationException e)
@@ -61,8 +61,8 @@ namespace RecipesBook.Controllers
         {
             try
             {
-                await this.recipeService.UpdateRecipeAsync(id, updateInfo, token);
-                return this.Ok();
+                await this.recipeService.UpdateRecipeAsync(id, updateInfo, token).ConfigureAwait(false);
+                return this.NoContent();
             }
             catch (ValidationException e)
             {
@@ -77,15 +77,15 @@ namespace RecipesBook.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(string id, CancellationToken token)
         {
-            try
-            {
-                await this.recipeService.DeleteRecipeAsync(id, token);
-                return this.NoContent();
-            }
-            catch (RecipeNotFoundException)
-            {
-                return this.NotFound();
-            }
+            await this.recipeService.DeleteRecipeAsync(id, token).ConfigureAwait(false);
+            return this.NoContent();
+        }
+
+        [HttpDelete("")]
+        public async Task<ActionResult> DeleteAllAsync(CancellationToken token)
+        {
+            await this.recipeService.DeleteAllRecipesAsync(token).ConfigureAwait(false);
+            return this.NoContent();
         }
     }
 }
