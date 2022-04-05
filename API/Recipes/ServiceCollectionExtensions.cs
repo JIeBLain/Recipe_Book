@@ -20,7 +20,7 @@ namespace RecipesBook.Recipes
                 return collection;
             });
             services.AddSingleton<IRecipesRepository, RecipesRepository>();
-            services.AddSingleton<RecipesService>();
+            services.AddSingleton<IRecipesService, RecipesService>();
         }
     }
 }
