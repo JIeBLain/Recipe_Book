@@ -10,7 +10,7 @@ using ModelRecipes = Model.Recipes;
 
 namespace RecipesBook.Recipes
 {
-    public sealed class RecipesService
+    public sealed class RecipesService : IRecipesService
     {
         private readonly IRecipesRepository recipesRepository;
         private readonly IMapper mapper;
@@ -66,6 +66,11 @@ namespace RecipesBook.Recipes
             await this.recipesRepository.DeleteRecipeAsync(id, token);
         }
 
+        public async Task DeleteAllRecipesAsync(CancellationToken token)
+        {
+            await this.recipesRepository.DeleteAllRecipesAsync(token);
+        }
+
         private static void ValidateOnCreate(ModelRecipes.RecipeCreateInfo createInfo)
         {
             if (createInfo.Ingredients?.Any(string.IsNullOrWhiteSpace) == true)
@@ -73,9 +78,19 @@ namespace RecipesBook.Recipes
                 throw new ValidationException("Ingredients cannot be null or whitespace.");
             }
 
+            if (createInfo.Ingredients == null)
+            {
+                throw new ValidationException("Ingredients cannot be null.");
+            }
+
             if (createInfo.Directions?.Any(string.IsNullOrWhiteSpace) == true)
             {
                 throw new ValidationException("Directions cannot be null or whitespace.");
+            }
+
+            if (createInfo.Directions == null)
+            {
+                throw new ValidationException("Directions cannot be null.");
             }
 
             if (createInfo.Directions?.Count > createInfo.Directions?.Distinct().Count())
