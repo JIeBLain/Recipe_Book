@@ -15,5 +15,7 @@ namespace Model.Repository
         public Task UpdateRecipeAsync(string id, RecipeUpdateInfo updateInfo, CancellationToken token);
 
         public Task DeleteRecipeAsync(string id, CancellationToken token);
+
+        public Task DeleteAllRecipesAsync(CancellationToken token);
     }
 }
