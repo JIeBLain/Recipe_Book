@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
@@ -35,8 +34,5 @@ namespace View.Recipes
         [DataMember(IsRequired = true)]
         [StringLength(100)]
         public string CookingTime { get; set; }
-        
-        [DataMember]
-        public DateTime? CreatedAt { get; set; }
     }
 }
