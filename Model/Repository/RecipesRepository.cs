@@ -61,18 +61,15 @@ namespace Model.Repository
             {
                 filter &= builder.Lt(recipe => recipe.CreatedAt, searchInfo.ToCreatedAt);
             }
-            
-            var limit = searchInfo.Limit ?? 10;
-            var offset = searchInfo.Offset ?? 0;
 
             var cursor = this.recipesCollection.Find(filter);
             var recipes = await cursor
-                .Limit(limit)
-                .Skip(offset)
+                .Limit(searchInfo.Limit)
+                .Skip(searchInfo.Offset)
                 .ToListAsync(token);
             var total = await cursor.CountDocumentsAsync(token);
 
-            return new RecipesList { Recipes = recipes, Total = total };
+            return new RecipesList {Recipes = recipes, Total = total};
         }
 
         public async Task<Recipe> CreateRecipeAsync(RecipeCreateInfo createInfo, CancellationToken token)
@@ -147,12 +144,12 @@ namespace Model.Repository
 
         public async Task DeleteRecipeAsync(string id, CancellationToken token)
         {
-            var deleteResult = await this.recipesCollection.DeleteOneAsync(recipe => recipe.Id == id, token);
+            await this.recipesCollection.DeleteOneAsync(recipe => recipe.Id == id, token);
+        }
 
-            if (deleteResult.DeletedCount == 0)
-            {
-                throw new RecipeNotFoundException(id);
-            }
+        public async Task DeleteAllRecipesAsync(CancellationToken token)
+        {
+            await this.recipesCollection.DeleteManyAsync(recipe => recipe.Id != null, token);
         }
     }
 }
