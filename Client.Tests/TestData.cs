@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Client.Models;
+using View.Recipes;
 
 namespace Client.Tests
 {

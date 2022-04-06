@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Client.ClientResult;
-using Client.Models;
+using View.Recipes;
 
 namespace Client
 {
